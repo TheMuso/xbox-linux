@@ -126,8 +126,8 @@ void irq_ctx_init(int cpu)
 					       THREAD_SIZE_ORDER));
 	per_cpu(softirq_stack, cpu) = irqstk;
 
-	printk(KERN_DEBUG "CPU %u irqstacks, hard=%p soft=%p\n",
-	       cpu, per_cpu(hardirq_stack, cpu),  per_cpu(softirq_stack, cpu));
+	printk(KERN_DEBUG "CPU %u irqstacks, hard=%px soft=%px\n",
+	       cpu, per_cpu(hardirq_stack, cpu), per_cpu(softirq_stack, cpu));
 }
 
 void do_softirq_own_stack(void)

@@ -462,6 +462,10 @@ enum {
 	IDE_AFLAG_MEDIUM_PRESENT	= (1 << 23),
 
 	IDE_AFLAG_NO_AUTOCLOSE		= (1 << 24),
+#ifdef CONFIG_X86_XBOX
+	IDE_AFLAG_XBOX_DRIVE		= (1 << 25),
+	IDE_AFLAG_XBOX_EJECT		= (1 << 26),
+#endif
 };
 
 /* device flags */
