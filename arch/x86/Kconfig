@@ -201,6 +201,7 @@ config OUTPUT_FORMAT
 
 config ARCH_DEFCONFIG
 	string
+	default "arch/x86/configs/xbox_defconfig" if X86_32 && X86_XBOX
 	default "arch/x86/configs/i386_defconfig" if X86_32
 	default "arch/x86/configs/x86_64_defconfig" if X86_64
 
@@ -254,7 +255,7 @@ config GENERIC_HWEIGHT
 
 config ARCH_MAY_HAVE_PC_FDC
 	def_bool y
-	depends on ISA_DMA_API
+	depends on ISA_DMA_API && !X86_XBOX
 
 config RWSEM_XCHGADD_ALGORITHM
 	def_bool y
@@ -312,7 +313,7 @@ config HAVE_INTEL_TXT
 
 config X86_32_SMP
 	def_bool y
-	depends on X86_32 && SMP
+	depends on X86_32 && SMP && !X86_XBOX
 
 config X86_64_SMP
 	def_bool y
@@ -475,6 +476,15 @@ config X86_EXTENDED_PLATFORM
 
 	  If you have one of these systems, or if you want to build a
 	  generic distribution kernel, say Y here - otherwise say N.
+
+config X86_XBOX
+	bool "Xbox (Microsoft)"
+	depends on X86_32
+	---help---
+	  Xbox is a standard PC from Microsoft minus some legacy hardware.
+
+	  Only choose this option if you are building a kernel for such a
+	  machine, otherwise choose "PC-compatible".
 endif
 
 if X86_64
@@ -958,7 +968,7 @@ config NR_CPUS
 
 config SCHED_SMT
 	bool "SMT (Hyperthreading) scheduler support"
-	depends on SMP
+	depends on SMP && !X86_XBOX
 	---help---
 	  SMT scheduler support improves the CPU scheduler's decision making
 	  when dealing with Intel Pentium 4 chips with HyperThreading at a
@@ -1222,7 +1232,7 @@ config I8K
 
 config X86_REBOOTFIXUPS
 	bool "Enable X86 board specific fixups for reboot"
-	depends on X86_32
+	depends on X86_32 && !X86_XBOX
 	---help---
 	  This enables chipset and/or board specific fixups to be done
 	  in order to get reboot to work correctly. This is only needed on
@@ -2642,6 +2652,7 @@ if X86_32
 
 config ISA
 	bool "ISA support"
+	depends on !X86_XBOX
 	---help---
 	  Find out whether you have ISA slots on your motherboard.  ISA is the
 	  name of a bus system, i.e. the way the CPU talks to the other stuff

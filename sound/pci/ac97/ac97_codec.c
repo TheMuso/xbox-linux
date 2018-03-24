@@ -2112,10 +2112,14 @@ int snd_ac97_mixer(struct snd_ac97_bus *bus, struct snd_ac97_template *template,
 	
 	/* test for AC'97 */
 	if (!(ac97->scaps & AC97_SCAP_SKIP_AUDIO) && !(ac97->scaps & AC97_SCAP_AUDIO)) {
-		/* test if we can write to the record gain volume register */
-		snd_ac97_write_cache(ac97, AC97_REC_GAIN, 0x8a06);
-		if (((err = snd_ac97_read(ac97, AC97_REC_GAIN)) & 0x7fff) == 0x0a06)
+		if ((ac97->scaps & AC97_SCAP_DETECT_BY_VENDOR)) {
 			ac97->scaps |= AC97_SCAP_AUDIO;
+		} else {
+			/* test if we can write to the record gain volume register */
+			snd_ac97_write_cache(ac97, AC97_REC_GAIN, 0x8a06);
+			if (((err = snd_ac97_read(ac97, AC97_REC_GAIN)) & 0x7fff) == 0x0a06)
+				ac97->scaps |= AC97_SCAP_AUDIO;
+		}
 	}
 	if (ac97->scaps & AC97_SCAP_AUDIO) {
 		ac97->caps = snd_ac97_read(ac97, AC97_RESET);
