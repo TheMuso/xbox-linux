@@ -268,3 +268,11 @@ config CMDLINE_PARTITION
 	help
 	  Say Y here if you want to read the partition table from bootargs.
 	  The format for the command line is just like mtdparts.
+
+config XBOX_PARTITION
+	bool "Xbox Partition support (EXPERIMENTAL)" if PARTITION_ADVANCED
+	default y if X86_XBOX
+	help
+	  Say Y here if you are running Linux on the Xbox, or would
+	  like to access a hard disk partitioned for the Xbox under
+	  a PC running Linux. Otherwise, say N.

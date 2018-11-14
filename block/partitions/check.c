@@ -36,6 +36,7 @@
 #include "karma.h"
 #include "sysv68.h"
 #include "cmdline.h"
+#include "xbox.h"
 
 int warn_no_part = 1; /*This is ugly: should make genhd removable media aware*/
 
@@ -174,6 +175,16 @@ check_partition(struct gendisk *hd, struct block_device *bdev)
 		}
 
 	}
+
+#ifdef CONFIG_XBOX_PARTITION
+	{
+		int xbox;
+
+		xbox = xbox_partition(state, bdev);
+		if (!res) res = xbox;
+	}
+#endif
+
 	if (res > 0) {
 		printk(KERN_INFO "%s", state->pp_buf);
 
