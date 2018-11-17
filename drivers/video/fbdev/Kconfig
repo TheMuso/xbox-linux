@@ -970,21 +970,6 @@ config FB_RIVA_BACKLIGHT
 	help
 	  Say Y here if you want to control the backlight of your display.
 
-config FB_XBOX
-	tristate "nVidia Xbox support"
-	depends on FB && PCI && X86_XBOX
-	select FB_MODE_HELPERS
-	select FB_CFB_FILLRECT
-	select FB_CFB_COPYAREA
-	select FB_CFB_IMAGEBLIT
-	select BITREVERSE
-	select VGASTATE
-	help
-	  This driver supports the graphics chip of the Microsoft Xbox.
-
-	  To compile this driver as a module, choose M here: the
-	  module will be called xboxfb.
-
 config FB_I740
 	tristate "Intel740 support"
 	depends on FB && PCI
